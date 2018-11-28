@@ -36,7 +36,7 @@ func init() {
 // Parse the dump data with Dumper generate.
 // It can not parse all the data formats with mysqldump outputs
 func Parse(r io.Reader, h ParseHandler, parseBinlogPos bool) error {
-	rb := bufio.NewReaderSize(r, 1024*16)
+	rb := bufio.NewReaderSize(r, 10*1024*1024)
 
 	var db string
 	var binlogParsed bool

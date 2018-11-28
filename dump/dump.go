@@ -5,7 +5,9 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
+	"time"
 
 	. "github.com/fasttrack-solutions/go-mysql/mysql"
 	"github.com/juju/errors"
@@ -150,10 +152,6 @@ func (d *Dumper) Dump(w io.Writer) error {
 	// We only care about data
 	args = append(args, "--no-create-info")
 
-	// Show progress
-	args = append(args, "--show-progress-size")
-	args = append(args, "--verbose")
-
 	// Multi row is easy for us to parse the data
 	args = append(args, "--skip-extended-insert")
 
@@ -200,21 +198,44 @@ func (d *Dumper) Dump(w io.Writer) error {
 	return cmd.Run()
 }
 
-// Dump MySQL and parse immediately
+// DumpAndParse dumps MySQL data into a file and parses.
 func (d *Dumper) DumpAndParse(h ParseHandler) error {
-	r, w := io.Pipe()
+	filename := strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".sql"
 
-	done := make(chan error, 1)
-	go func() {
-		err := Parse(r, h, !d.masterDataSkipped)
-		r.CloseWithError(err)
-		done <- err
+	// Create dump file and the corresponding writer.
+	fo, foErr := os.Create(filename)
+	if foErr != nil {
+		return errors.Trace(foErr)
+	}
+
+	log.Infof("created dump file %s, dumping MySQL data..", filename)
+
+	dumpErr := d.Dump(fo)
+	if dumpErr != nil {
+		return errors.Trace(dumpErr)
+	}
+
+	fo.Close()
+
+	log.Info("MySQL dump finished, parsing...")
+
+	// Read dump file and parse the data.
+	fi, fiErr := os.Open(filename)
+	if fiErr != nil {
+		return errors.Trace(fiErr)
+	}
+
+	defer func() {
+		fi.Close()
+		os.Remove(filename)
 	}()
 
-	err := d.Dump(w)
-	w.CloseWithError(err)
+	pErr := Parse(fi, h, !d.masterDataSkipped)
+	if pErr != nil {
+		return errors.Trace(pErr)
+	}
 
-	err = <-done
+	log.Info("MySQL dump parsing finished")
 
-	return errors.Trace(err)
+	return nil
 }
