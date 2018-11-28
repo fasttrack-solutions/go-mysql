@@ -150,6 +150,10 @@ func (d *Dumper) Dump(w io.Writer) error {
 	// We only care about data
 	args = append(args, "--no-create-info")
 
+	// Show progress
+	args = append(args, "--show-progress-size")
+	args = append(args, "--verbose")
+
 	// Multi row is easy for us to parse the data
 	args = append(args, "--skip-extended-insert")
 
