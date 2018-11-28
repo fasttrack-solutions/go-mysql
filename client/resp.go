@@ -3,8 +3,8 @@ package client
 import (
 	"encoding/binary"
 
+	. "github.com/fasttrack-solutions/go-mysql/mysql"
 	"github.com/juju/errors"
-	. "github.com/siddontang/go-mysql/mysql"
 	"github.com/siddontang/go/hack"
 )
 

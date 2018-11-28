@@ -6,8 +6,8 @@ import (
 	"io"
 	"net"
 
+	. "github.com/fasttrack-solutions/go-mysql/mysql"
 	"github.com/juju/errors"
-	. "github.com/siddontang/go-mysql/mysql"
 )
 
 /*

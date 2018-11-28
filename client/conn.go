@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
+	. "github.com/fasttrack-solutions/go-mysql/mysql"
+	"github.com/fasttrack-solutions/go-mysql/packet"
 	"github.com/juju/errors"
-	. "github.com/siddontang/go-mysql/mysql"
-	"github.com/siddontang/go-mysql/packet"
 )
 
 type Conn struct {

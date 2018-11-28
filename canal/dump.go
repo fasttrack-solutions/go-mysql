@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/fasttrack-solutions/go-mysql/dump"
+	"github.com/fasttrack-solutions/go-mysql/mysql"
+	"github.com/fasttrack-solutions/go-mysql/schema"
 	"github.com/juju/errors"
 	"github.com/shopspring/decimal"
 	"github.com/siddontang/go-log/log"
-	"github.com/siddontang/go-mysql/dump"
-	"github.com/siddontang/go-mysql/mysql"
-	"github.com/siddontang/go-mysql/schema"
 )
 
 type dumpParseHandler struct {

@@ -5,9 +5,9 @@ import (
 	"crypto/tls"
 	"encoding/binary"
 
+	. "github.com/fasttrack-solutions/go-mysql/mysql"
+	"github.com/fasttrack-solutions/go-mysql/packet"
 	"github.com/juju/errors"
-	. "github.com/siddontang/go-mysql/mysql"
-	"github.com/siddontang/go-mysql/packet"
 )
 
 func (c *Conn) readInitialHandshake() error {

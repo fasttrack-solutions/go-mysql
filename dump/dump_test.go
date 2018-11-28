@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/fasttrack-solutions/go-mysql/client"
 	. "github.com/pingcap/check"
-	"github.com/siddontang/go-mysql/client"
 )
 
 // use docker mysql for test

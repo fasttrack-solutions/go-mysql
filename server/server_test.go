@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
+	mysql "github.com/fasttrack-solutions/go-mysql/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/juju/errors"
 	. "github.com/pingcap/check"
-	mysql "github.com/siddontang/go-mysql/mysql"
 )
 
 var testAddr = flag.String("addr", "127.0.0.1:4000", "MySQL proxy server address")
